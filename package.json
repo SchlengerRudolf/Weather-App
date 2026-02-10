@@ -1,0 +1,40 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack serve --open --config webpack.dev.js",
+    "pretty": "prettier --write",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SchlengerRudolf/template.git"
+  },
+  "keywords": [],
+  "author": "Rudolf Schlenger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SchlengerRudolf/template/issues"
+  },
+  "homepage": "https://github.com/SchlengerRudolf/template#readme",
+  "devDependencies": {
+    "@eslint/css": "^0.14.1",
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^1.0.0",
+    "@eslint/markdown": "^7.5.1",
+    "css-loader": "^7.1.2",
+    "eslint": "^10.0.0",
+    "globals": "^17.3.0",
+    "html-webpack-plugin": "^5.6.6",
+    "prettier": "3.8.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.104.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.3",
+    "webpack-merge": "^6.0.1"
+  }
+}
