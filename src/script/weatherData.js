@@ -15,10 +15,42 @@ export const weatherData = (() => {
     console.log(data);
   };
 
+  const getResolvedAddress = () => {
+    return data.resolvedAddress;
+  };
+
+  const getDatetime = (day) => {
+    return getDay(day).datetime;
+  };
+
+  const getMaxTemperature = (day) => {
+    return Math.round(getDay(day).tempmax);
+  };
+
+  const getMinTemperature = (day) => {
+    return Math.round(getDay(day).tempmin);
+  };
+
+  const getDescription = (day) => {
+    return getDay(day).description;
+  };
+
+  const getIcon = (day) => {
+    return getDay(day).icon;
+  };
+  /* --- Helper functions --- */
+
   const getDay = (day) => {
-    console.log(data.days[day]);
     return data.days[day];
   };
 
-  return { setData, getDay };
+  return {
+    setData,
+    getResolvedAddress,
+    getDatetime,
+    getMaxTemperature,
+    getMinTemperature,
+    getDescription,
+    getIcon,
+  };
 })();
