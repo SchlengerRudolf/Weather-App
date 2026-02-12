@@ -8,7 +8,7 @@ export const weatherData = (() => {
       city +
       "?unitGroup=metric&include=days%2Chours%2Ccurrent%2Calerts%2Cevents&key=" +
       key +
-      "&contentType=json";
+      "&contentType=json&iconSet=icons2";
 
     const newData = await fetch(url);
     data = await newData.json();
