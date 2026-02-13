@@ -48,7 +48,7 @@ export const weatherData = (() => {
   };
 
   const getPrecipitationProbability = (day) => {
-    return getDay(day).precipprob;
+    return Math.round(getDay(day).precipprob);
   };
 
   const getHours = (day) => {
