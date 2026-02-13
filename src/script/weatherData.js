@@ -31,6 +31,14 @@ export const weatherData = (() => {
     return Math.round(getDay(day).tempmin);
   };
 
+  const getFeelsLikeMax = (day) => {
+    return Math.round(getDay(day).feelslikemax);
+  };
+
+  const getFeelsLikeMin = (day) => {
+    return Math.round(getDay(day).feelslikemin);
+  };
+
   const getDescription = (day) => {
     return getDay(day).description;
   };
@@ -38,6 +46,11 @@ export const weatherData = (() => {
   const getIcon = (day) => {
     return getDay(day).icon;
   };
+
+  const getPrecipitationProbability = (day) => {
+    return getDay(day).precipprob;
+  };
+
   /* --- Helper functions --- */
 
   const getDay = (day) => {
@@ -50,7 +63,10 @@ export const weatherData = (() => {
     getDatetime,
     getMaxTemperature,
     getMinTemperature,
+    getFeelsLikeMax,
+    getFeelsLikeMin,
     getDescription,
     getIcon,
+    getPrecipitationProbability,
   };
 })();

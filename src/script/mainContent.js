@@ -10,6 +10,7 @@ export const mainContent = (() => {
   const displayContent = () => {
     displayHeader();
     displayForecastCalendar();
+    displaySelectedDay(0);
   };
 
   /* --- Display function of each individual part of mainContent --- */
@@ -38,6 +39,27 @@ export const mainContent = (() => {
     }
   };
 
+  const displaySelectedDay = (day) => {
+    const dayContainer = document.getElementById("selectedDayContainer");
+
+    const leftSide = createLeftSelectedDay(
+      weatherData.getDatetime(day),
+      images[`${weatherData.getIcon(day)}.svg`],
+      weatherData.getMinTemperature(day),
+      weatherData.getMaxTemperature(day),
+      weatherData.getDescription(day),
+    );
+
+    const rightSide = createRightSelectedDay(
+      weatherData.getFeelsLikeMin(day),
+      weatherData.getFeelsLikeMax(day),
+      weatherData.getPrecipitationProbability(day),
+    );
+
+    dayContainer.appendChild(leftSide);
+    dayContainer.appendChild(rightSide);
+  };
+
   /* --- Helper functions --- */
 
   const createDayContainer = (date, iconSrc, min, max) => {
@@ -47,7 +69,7 @@ export const mainContent = (() => {
     const temperatureText = document.createElement("p");
     const icon = document.createElement("img");
 
-    date = format(date, "EEEEEE dd.MM")
+    date = format(date, "EEEEEE dd.MM");
     container.classList.add("dayContainer");
     temperatureText.textContent = `${max}° / ${min}°`;
     icon.src = iconSrc;
@@ -55,6 +77,44 @@ export const mainContent = (() => {
     upperHalf.textContent = date;
     lowerHalf.appendChild(icon);
     lowerHalf.appendChild(temperatureText);
+    container.appendChild(upperHalf);
+    container.appendChild(lowerHalf);
+
+    return container;
+  };
+
+  const createLeftSelectedDay = (date, iconSrc, min, max, description) => {
+    const container = document.createElement("div");
+    const upperPart = document.createElement("p");
+    const middlePart = document.createElement("div");
+    const lowerPart = document.createElement("p");
+    const temperatureText = document.createElement("p");
+    const icon = document.createElement("img");
+
+    date = format(date, "EEEEEE dd.MM");
+    container.classList.add("leftSelectedDay");
+    temperatureText.textContent = `${max}° / ${min}°`;
+    icon.src = iconSrc;
+
+    upperPart.textContent = date;
+    middlePart.appendChild(icon);
+    middlePart.appendChild(temperatureText);
+    lowerPart.textContent = description;
+    container.appendChild(upperPart);
+    container.appendChild(middlePart);
+    container.appendChild(lowerPart);
+
+    return container;
+  };
+
+  const createRightSelectedDay = (feelsLikeMin, feelsLikeMax, PrecipProb) => {
+    const container = document.createElement("div");
+    const upperHalf = document.createElement("p");
+    const lowerHalf = document.createElement("p");
+
+    container.classList.add("rightSelectedDay")
+    upperHalf.textContent = `${feelsLikeMax}° / ${feelsLikeMin}°`;
+    lowerHalf.textContent = `${PrecipProb}%`;
     container.appendChild(upperHalf);
     container.appendChild(lowerHalf);
 

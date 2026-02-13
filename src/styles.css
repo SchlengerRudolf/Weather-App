@@ -34,7 +34,7 @@
 #main-content {
   background-color: var(--main-color);
   display: grid;
-  grid-template-rows: 50px 1fr 1fr;
+  grid-template-rows: 50px 2fr 1fr 1fr;
 }
 
 #header {
@@ -46,4 +46,12 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(3, 1fr);
+}
+
+#forecastCalendar img {
+  width: 75px;
+}
+
+.leftSelectedDay img {
+  width: 100px;
 }
