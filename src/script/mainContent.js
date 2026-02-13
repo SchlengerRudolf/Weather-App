@@ -11,6 +11,7 @@ export const mainContent = (() => {
     displayHeader();
     displayForecastCalendar();
     displaySelectedDay(0);
+    displayTimeOfDay(0);
   };
 
   /* --- Display function of each individual part of mainContent --- */
@@ -41,6 +42,7 @@ export const mainContent = (() => {
 
   const displaySelectedDay = (day) => {
     const dayContainer = document.getElementById("selectedDayContainer");
+    dayContainer.textContent = "";
 
     const leftSide = createLeftSelectedDay(
       weatherData.getDatetime(day),
@@ -58,6 +60,37 @@ export const mainContent = (() => {
 
     dayContainer.appendChild(leftSide);
     dayContainer.appendChild(rightSide);
+  };
+
+  const displayTimeOfDay = (day) => {
+    const timeOfDayContainer = document.getElementById("timeOfDayContainer");
+    timeOfDayContainer.textContent = "";
+
+    const morningContainer = createTimeOfDayContainer(
+      "Morning",
+      "6am-12pm",
+      getTimeOfDayValues(day, 6, 12),
+    );
+    const noonContainer = createTimeOfDayContainer(
+      "Noon",
+      "12pm-6pm",
+      getTimeOfDayValues(day, 12, 18),
+    );
+    const eveningContainer = createTimeOfDayContainer(
+      "Evening",
+      "6pm-10pm",
+      getTimeOfDayValues(day, 18, 22),
+    );
+    const nightContainer = createTimeOfDayContainer(
+      "Night",
+      "10pm-6am",
+      getTimeOfDayValues(day, 22, 6),
+    );
+
+    timeOfDayContainer.appendChild(morningContainer);
+    timeOfDayContainer.appendChild(noonContainer);
+    timeOfDayContainer.appendChild(eveningContainer);
+    timeOfDayContainer.appendChild(nightContainer);
   };
 
   /* --- Helper functions --- */
@@ -107,25 +140,84 @@ export const mainContent = (() => {
     return container;
   };
 
-  const createRightSelectedDay = (feelsLikeMin, feelsLikeMax, PrecipProb) => {
+  const createRightSelectedDay = (feelsLikeMin, feelsLikeMax, precipProb) => {
     const container = document.createElement("div");
     const upperHalf = document.createElement("p");
     const lowerHalf = document.createElement("p");
 
-    container.classList.add("rightSelectedDay")
+    container.classList.add("rightSelectedDay");
     upperHalf.textContent = `${feelsLikeMax}° / ${feelsLikeMin}°`;
-    lowerHalf.textContent = `${PrecipProb}%`;
+    lowerHalf.textContent = `${precipProb}%`;
     container.appendChild(upperHalf);
     container.appendChild(lowerHalf);
 
     return container;
   };
 
+  const createTimeOfDayContainer = (topText, midText, lowerHalfValues) => {
+    const container = document.createElement("div");
+    const topPart = document.createElement("p");
+    const upperMiddlePart = document.createElement("p");
+    const lowerMiddlePart = document.createElement("div");
+    const temperatureText = document.createElement("p");
+    const icon = document.createElement("img");
+    const bottomPart = document.createElement("p");
+
+    container.classList.add("timeOfDayContainer");
+    temperatureText.textContent = `${lowerHalfValues.max}° / ${lowerHalfValues.min}°`;
+    icon.src = images[`${lowerHalfValues.iconName}.svg`];
+
+    topPart.textContent = topText;
+    upperMiddlePart.textContent = midText;
+    lowerMiddlePart.appendChild(icon);
+    lowerMiddlePart.appendChild(temperatureText);
+    bottomPart.textContent = `${lowerHalfValues.precripProb}%`;
+
+    container.appendChild(topPart);
+    container.appendChild(upperMiddlePart);
+    container.appendChild(lowerMiddlePart);
+    container.appendChild(bottomPart);
+
+    return container;
+  };
+
+  /* Returns the lowest/highest temperature, aswell as the highest precipitation
+  probability of an hour span in a day or up to the next day and a matching icon. */
+  const getTimeOfDayValues = (day, startHour, endHour) => {
+    let temperatures = [];
+    let precipProbs = [];
+    let iconName;
+
+    if (startHour > endHour) {
+      for (let i = startHour; i <= 23; i++) {
+        temperatures.push(weatherData.getHours(day)[i].temp);
+        precipProbs.push(weatherData.getHours(day)[i].precipprob);
+      }
+      for (let i = 0; i <= endHour; i++) {
+        temperatures.push(weatherData.getHours(day + 1)[i].temp);
+        precipProbs.push(weatherData.getHours(day + 1)[i].precipprob);
+      }
+      iconName = weatherData.getHours(day + 1)[2].icon;
+    } else {
+      for (let i = startHour; i <= endHour; i++) {
+        temperatures.push(weatherData.getHours(day)[i].temp);
+        precipProbs.push(weatherData.getHours(day)[i].precipprob);
+      }
+      iconName = weatherData.getHours(day)[(startHour + endHour) / 2].icon;
+    }
+
+    return {
+      min: Math.round(Math.min(...temperatures)),
+      max: Math.round(Math.max(...temperatures)),
+      precripProb: Math.round(Math.max(...precipProbs)),
+      iconName: iconName,
+    };
+  };
+
   return { displayContent };
 })();
 
 // Returns all files inside a folder via require.context() input value
-
 function importAll(r) {
   let images = {};
   r.keys().map((item, index) => {

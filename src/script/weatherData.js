@@ -51,6 +51,10 @@ export const weatherData = (() => {
     return getDay(day).precipprob;
   };
 
+  const getHours = (day) => {
+    return getDay(day).hours;
+  };
+
   /* --- Helper functions --- */
 
   const getDay = (day) => {
@@ -68,5 +72,6 @@ export const weatherData = (() => {
     getDescription,
     getIcon,
     getPrecipitationProbability,
+    getHours,
   };
 })();
