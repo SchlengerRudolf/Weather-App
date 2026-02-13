@@ -36,6 +36,7 @@ export const mainContent = (() => {
         weatherData.getMinTemperature(i),
         weatherData.getMaxTemperature(i),
       );
+      addShowDayEvent(dayContainer, i);
       calendar.appendChild(dayContainer);
     }
   };
@@ -212,6 +213,15 @@ export const mainContent = (() => {
       precripProb: Math.round(Math.max(...precipProbs)),
       iconName: iconName,
     };
+  };
+
+  /* --- Event-listener ---- */
+
+  const addShowDayEvent = (container, day) => {
+    container.addEventListener("click", () => {
+      displaySelectedDay(day);
+      displayTimeOfDay(day);
+    });
   };
 
   return { displayContent };
