@@ -82,11 +82,14 @@ export const mainContent = (() => {
       "6pm-10pm",
       getTimeOfDayValues(day, 18, 22),
     );
-    const nightContainer = createTimeOfDayContainer(
-      "Night",
-      "10pm-6am",
-      getTimeOfDayValues(day, 22, 6),
-    );
+    const nightContainer =
+      day < 14
+        ? createTimeOfDayContainer(
+            "Night",
+            "10pm-6am",
+            getTimeOfDayValues(day, 22, 6),
+          )
+        : document.createElement("div");
 
     timeOfDayContainer.appendChild(morningContainer);
     timeOfDayContainer.appendChild(noonContainer);
@@ -95,6 +98,8 @@ export const mainContent = (() => {
   };
 
   /* --- Helper functions --- */
+
+  // For displayForecastCalendar
 
   const createDayContainer = (date, iconSrc, min, max) => {
     const container = document.createElement("div");
@@ -116,6 +121,8 @@ export const mainContent = (() => {
 
     return container;
   };
+
+  // For displaySelectedDay
 
   const createLeftSelectedDay = (date, iconSrc, min, max, description) => {
     const container = document.createElement("div");
@@ -154,6 +161,8 @@ export const mainContent = (() => {
 
     return container;
   };
+
+  //For displayTimeOfDay
 
   const createTimeOfDayContainer = (topText, midText, lowerHalfValues) => {
     const container = document.createElement("div");
