@@ -1,12 +1,15 @@
 export const weatherData = (() => {
   const key = "9VETQD2WZMCXJAD8FHQS9ACK6";
+  let unitGroup = "metric";
   let data = {};
 
   const setData = async (city) => {
     const url =
       "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" +
       city +
-      "?unitGroup=metric&include=days%2Chours%2Ccurrent%2Calerts%2Cevents&key=" +
+      "?unitGroup=" +
+      unitGroup +
+      "&include=days%2Chours%2Ccurrent%2Calerts%2Cevents&key=" +
       key +
       "&contentType=json&iconSet=icons2";
 
@@ -14,6 +17,11 @@ export const weatherData = (() => {
     data = await newData.json();
     console.log(data);
   };
+
+  const toggleUnitGroup = async () => {
+    unitGroup = unitGroup === "metric" ? "us" : "metric";
+    await setData(getResolvedAddress());
+  }
 
   const getResolvedAddress = () => {
     return data.resolvedAddress;
@@ -63,6 +71,7 @@ export const weatherData = (() => {
 
   return {
     setData,
+    toggleUnitGroup,
     getResolvedAddress,
     getDatetime,
     getMaxTemperature,
