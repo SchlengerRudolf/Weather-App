@@ -7,6 +7,10 @@
   margin: 0;
 }
 
+.loading {
+  filter: blur(4px);
+}
+
 #content-container {
   background-color: var(--side-color);
   display: grid;
