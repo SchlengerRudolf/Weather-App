@@ -1,5 +1,7 @@
 import { weatherData } from "./weatherData.js";
 import { format } from "date-fns";
+import rainDrop from "../content/rain-drop.svg";
+import heart from "../content/heart.svg";
 
 export const mainContent = (() => {
   //Import all weatherIcons
@@ -150,12 +152,23 @@ export const mainContent = (() => {
 
   const createRightSelectedDay = (feelsLikeMin, feelsLikeMax, precipProb) => {
     const container = document.createElement("div");
-    const upperHalf = document.createElement("p");
-    const lowerHalf = document.createElement("p");
+    const upperHalf = document.createElement("span");
+    const lowerHalf = document.createElement("span");
+    const upperText = document.createElement("p");
+    const lowerText = document.createElement("p");
+    const rainIcon = document.createElement("img");
+    const heartIcon = document.createElement("img");
 
+    upperText.textContent = `${feelsLikeMax}° / ${feelsLikeMin}°`;
+    lowerText.textContent = `${precipProb}%`;
     container.classList.add("rightSelectedDay");
-    upperHalf.textContent = `${feelsLikeMax}° / ${feelsLikeMin}°`;
-    lowerHalf.textContent = `${precipProb}%`;
+    rainIcon.src = rainDrop;
+    heartIcon.src = heart;
+
+    upperHalf.appendChild(heartIcon);
+    upperHalf.appendChild(upperText);
+    lowerHalf.appendChild(rainIcon);
+    lowerHalf.appendChild(lowerText);
     container.appendChild(upperHalf);
     container.appendChild(lowerHalf);
 
@@ -169,20 +182,24 @@ export const mainContent = (() => {
     const topPart = document.createElement("p");
     const upperMiddlePart = document.createElement("p");
     const lowerMiddlePart = document.createElement("div");
+    const bottomPart = document.createElement("span");
     const temperatureText = document.createElement("p");
+    const bottomText = document.createElement("p");
     const icon = document.createElement("img");
-    const bottomPart = document.createElement("p");
-
-    container.classList.add("timeOfDayContainer");
-    temperatureText.textContent = `${lowerHalfValues.max}° / ${lowerHalfValues.min}°`;
-    icon.src = images[`${lowerHalfValues.iconName}.svg`];
+    const rainIcon = document.createElement("img");
 
     topPart.textContent = topText;
+    temperatureText.textContent = `${lowerHalfValues.max}° / ${lowerHalfValues.min}°`;
     upperMiddlePart.textContent = midText;
+    bottomText.textContent = `${lowerHalfValues.precripProb}%`;
+    container.classList.add("timeOfDayContainer");
+    icon.src = images[`${lowerHalfValues.iconName}.svg`];
+    rainIcon.src = rainDrop;
+
     lowerMiddlePart.appendChild(icon);
     lowerMiddlePart.appendChild(temperatureText);
-    bottomPart.textContent = `${lowerHalfValues.precripProb}%`;
-
+    bottomPart.appendChild(rainIcon);
+    bottomPart.appendChild(bottomText);
     container.appendChild(topPart);
     container.appendChild(upperMiddlePart);
     container.appendChild(lowerMiddlePart);

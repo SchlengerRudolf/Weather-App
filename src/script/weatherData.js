@@ -15,7 +15,6 @@ export const weatherData = (() => {
 
     const newData = await fetch(url);
     data = await newData.json();
-    console.log(data);
   };
 
   const toggleUnitGroup = async () => {
