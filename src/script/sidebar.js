@@ -20,7 +20,7 @@ toggleButton.addEventListener("click", async () => {
   mainContent.displayContent();
   contentContainer.className = "";
   toggleButton.textContent =
-    toggleButton.textContent === "Switch to Fahrenheit"
-      ? "Switch to Celsius"
-      : "Switch to Fahrenheit";
+    toggleButton.textContent === "Switch to F°"
+      ? "Switch to C°"
+      : "Switch to F°";
 });
